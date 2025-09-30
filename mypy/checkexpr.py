@@ -1499,8 +1499,9 @@ class ExpressionChecker(ExpressionVisitor[Type]):
                     if messages and supertype.args:
                         args = try_getting_str_literals_from_type(supertype.args[0])
                         if args and nodes.ARG_STAR2 not in callee.arg_kinds:
-                            messages.unexpected_keyword_argument(
-                                callee, args[0], supertype.args[0], context)
+                            for arg in args:
+                                messages.unexpected_keyword_argument(
+                                    callee, arg, supertype.args[0], context)
                             is_unexpected_arg_error = True
                         elif (args and nodes.ARG_POS in callee.arg_kinds and
                                 not all(arg in callee.arg_names for arg in args) and
