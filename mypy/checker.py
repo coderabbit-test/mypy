@@ -100,10 +100,7 @@ DeferredNodeType: _TypeAlias = Union[FuncDef, LambdaExpr, OverloadedFuncDef, Dec
 FineGrainedDeferredNodeType: _TypeAlias = Union[FuncDef, MypyFile, OverloadedFuncDef]
 
 
-# A node which is postponed to be processed during the next pass.
-# In normal mode one can defer functions and methods (also decorated and/or overloaded)
-# and lambda expressions. Nested functions can't be deferred -- only top-level functions
-# and methods of classes not defined within a function can be deferred.
+
 class DeferredNode(NamedTuple):
     node: DeferredNodeType
     # And its TypeInfo (for semantic analysis self type handling
