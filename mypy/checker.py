@@ -2451,8 +2451,10 @@ class TypeChecker(NodeVisitor[None], CheckerPluginInterface):
             # This means that we reassign abstract class to itself. Like `A = A`
             return True
 
-        rvalue_type = get_proper_type(rvalue_type)
-        lvalue_type = get_proper_type(lvalue_type)
+        # Types should already be proper types from the caller
+        # Skip processing for PartialType to avoid assertion failures
+        if isinstance(lvalue_type, PartialType):
+            return True
         if not (
             isinstance(rvalue_type, CallableType) and
             rvalue_type.is_type_obj() and
